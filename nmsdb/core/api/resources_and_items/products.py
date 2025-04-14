@@ -21,10 +21,10 @@ async def get_products(
     q: Annotated[QueryParams, Depends()] = None,
 ):
     controller = ProductControllerAPI(db=db, redis=redis, crud=nmsdb_product)
-    return await controller.get_multi(skip=skip, limit=limit, params=q)
+    return await controller.get_objects(skip=skip, limit=limit, params=q)
 
 
 @router.get("/{game_id}", response_model=ProductRead)
 async def get_product(db: DatabaseDep, redis: RedisServiceDep, game_id: str):
     controller = ProductControllerAPI(db=db, redis=redis, crud=nmsdb_product)
-    return await controller.get(game_id=game_id)
+    return await controller.get_object(game_id=game_id)

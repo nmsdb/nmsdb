@@ -25,11 +25,11 @@ class BaseController(ABC):
         self.templates = templates
 
     @abstractmethod
-    def get():
+    def get_object():
         pass
 
     @abstractmethod
-    def get_multi():
+    def get_objects():
         pass
 
     async def cache_get(

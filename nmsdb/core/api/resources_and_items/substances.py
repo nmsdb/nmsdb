@@ -21,10 +21,10 @@ async def get_substances(
     params: Annotated[QueryParams, Depends()] = None,
 ):
     controller = SubstanceControllerAPI(db=db, redis=redis, crud=nmsdb_substance)
-    return await controller.get_multi(skip=skip, limit=limit, params=params)
+    return await controller.get_objects(skip=skip, limit=limit, params=params)
 
 
 @router.get("/{game_id}", response_model=SubstanceRead)
 async def get_substance(db: DatabaseDep, redis: RedisServiceDep, game_id: str):
     controller = SubstanceControllerAPI(db=db, redis=redis, crud=nmsdb_substance)
-    return await controller.get(game_id=game_id)
+    return await controller.get_object(game_id=game_id)

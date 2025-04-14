@@ -1,6 +1,7 @@
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Request
 
-from nmsdb.main import app
+from nmsdb.main import app, templates
+from nmsdb.core.navigation import NAV
 from nmsdb.core.controllers.base import (
     BaseController,
     BaseUIController,
@@ -12,6 +13,7 @@ from nmsdb.core.constants.redis import REDIS_KEY_SUBSTANCE, REDIS_KEY_LANGUAGE_E
 from nmsdb.core.models.ui.dropdown import HTMXDropdown, HTMXDropdownItem
 from nmsdb.core.dependencies.redis import get_redis_service
 from nmsdb.core.constants.redis import REDIS_KEY_PRODUCT_TYPES
+from nmsdb.core.htmx import is_htmx
 
 
 class ProductControllerBase(BaseController):
@@ -128,23 +130,49 @@ class ProductControllerBase(BaseController):
 
 
 class ProductControllerAPI(BaseAPIController, ProductControllerBase):
-    async def get(self, game_id: str) -> Product:
+    async def get_object(self, game_id: str) -> Product:
         return await super()._get(game_id=game_id)
 
-    async def get_multi(
+    async def get_objects(
         self, skip: int = 0, limit: int = 100, params: ProductQueryParams | None = None
     ) -> list[Product]:
         return await super()._get_multi(skip=skip, limit=limit, params=params)
 
 
 class ProductControllerUI(BaseUIController, ProductControllerBase):
-    async def get(self, game_id: str) -> Product:
-        return await super()._get(game_id=game_id)
+    async def get_object(self, request: Request, game_id: str) -> Product:
+        product = await super()._get(game_id=game_id)
+        return templates.TemplateResponse(
+            request=request,
+            name="pages/resources_and_items/product.html",
+            context={"nav": NAV, "product": product},
+        )
 
-    async def get_multi(
-        self, skip: int = 0, limit: int = 100, params: ProductQueryParams | None = None
+    async def get_objects(
+        self,
+        request: Request,
+        skip: int = 0,
+        limit: int = 100,
+        params: ProductQueryParams | None = None,
     ) -> list[Product]:
-        return await super()._get_multi(skip=skip, limit=limit, params=params)
+        if not is_htmx(request):
+            return templates.TemplateResponse(
+                request=request,
+                name="pages/resources_and_items/products.html",
+                context={
+                    "nav": NAV,
+                    "dropdown": await self.build_type_dropdown(),
+                },
+            )
+
+        products = await super()._get_multi(skip=skip, limit=limit, params=params)
+        return templates.TemplateResponse(
+            request=request,
+            name="fragments/resources_and_items/products.html",
+            context={
+                "products": products,
+            },
+        )
 
     async def build_type_dropdown(self) -> HTMXDropdown:
         """

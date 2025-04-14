@@ -1,6 +1,7 @@
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Request
 
-from nmsdb.main import app
+from nmsdb.main import app, templates
+from nmsdb.core.navigation import NAV
 from nmsdb.core.controllers.base import (
     BaseController,
     BaseUIController,
@@ -12,6 +13,7 @@ from nmsdb.core.constants.redis import REDIS_KEY_SUBSTANCE, REDIS_KEY_LANGUAGE_E
 from nmsdb.core.models.ui.dropdown import HTMXDropdown, HTMXDropdownItem
 from nmsdb.core.dependencies.redis import get_redis_service
 from nmsdb.core.constants.redis import REDIS_KEY_SUBSTANCE_CATEGORIES
+from nmsdb.core.htmx import is_htmx
 
 
 class SubstanceControllerBase(BaseController):
@@ -150,10 +152,10 @@ class SubstanceControllerBase(BaseController):
 class SubstanceControllerAPI(BaseAPIController, SubstanceControllerBase):
     CRUDController = CRUDSubstance
 
-    async def get(self, game_id: str) -> Substance:
+    async def get_object(self, game_id: str) -> Substance:
         return await super()._get(game_id=game_id)
 
-    async def get_multi(
+    async def get_objects(
         self,
         skip: int = 0,
         limit: int = 100,
@@ -163,16 +165,38 @@ class SubstanceControllerAPI(BaseAPIController, SubstanceControllerBase):
 
 
 class SubstanceControllerUI(BaseUIController, SubstanceControllerBase):
-    async def get(self, game_id: str) -> Substance:
-        return await super()._get(game_id=game_id)
+    async def get_object(self, request: Request, game_id: str) -> Substance:
+        substance = await self._get(game_id=game_id)
+        return templates.TemplateResponse(
+            request=request,
+            name="pages/resources_and_items/substance.html",
+            context={"nav": NAV, "substance": substance},
+        )
 
-    async def get_multi(
+    async def get_objects(
         self,
+        request: Request,
         skip: int = 0,
         limit: int = 100,
         params: SubstanceQueryParams | None = None,
     ) -> list[Substance]:
-        return await super()._get_multi(skip=skip, limit=limit, params=params)
+        if not is_htmx(request):
+            return templates.TemplateResponse(
+                request=request,
+                name="pages/resources_and_items/substances.html",
+                context={
+                    "nav": NAV,
+                    "dropdown": await self.build_category_dropdown(),
+                },
+            )
+
+        substances = await self._get_multi(skip=skip, limit=limit, params=params)
+
+        return templates.TemplateResponse(
+            request=request,
+            name="fragments/resources_and_items/substances.html",
+            context={"substances": substances},
+        )
 
     async def build_category_dropdown(self) -> HTMXDropdown:
         """
