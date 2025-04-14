@@ -1,0 +1,189 @@
+@font-face {
+    font-family: 'NMSGeoSans';
+    src: url('https://font.nmscd.com/assets/font/NMSGeoSans_Kerned/Web-TT/NMSGeoSans_Kerned.eot');
+    src: url('https://font.nmscd.com/assets/font/NMSGeoSans_Kerned/Web-TT/NMSGeoSans_Kerned.eot?#iefix') format('embedded-opentype'),
+        url('https://font.nmscd.com/assets/font/NMSGeoSans_Kerned/Web-TT/NMSGeoSans_Kerned.woff') format('woff'),
+        url('https://font.nmscd.com/assets/font/NMSGeoSans_Kerned/Web-TT/NMSGeoSans_Kerned.ttf') format('truetype');
+}
+
+/* Make everything use the NMSGeoSans font */
+* {
+    font-family: 'NMSGeoSans';
+}
+
+/* NMSDB Dark Theme */
+:root {
+    --nms-dark-bg: #121212;
+    --nms-dark-surface: #1e1e1e;
+    --nms-dark-primary: #bb86fc;
+    --nms-dark-secondary: #03dac6;
+    --nms-dark-accent: #cf6679;
+    --nms-dark-text: #e1e1e1;
+    --nms-dark-text-secondary: #a0a0a0;
+    --nms-dark-border: #2d2d2d;
+    --nms-space-blue: #051f3a;
+    --nms-space-purple: #371e58;
+}
+
+body.dark-theme {
+    background-color: var(--nms-dark-bg);
+    color: var(--nms-dark-text);
+}
+
+/* Navbar styling */
+body.dark-theme .sb-topnav {
+    background-color: var(--nms-space-blue);
+    border-bottom: 1px solid var(--nms-dark-border);
+}
+
+body.dark-theme .sb-topnav .navbar-brand {
+    color: var(--nms-dark-text);
+}
+
+body.dark-theme .sb-topnav .navbar-nav .nav-link {
+    color: var(--nms-dark-text-secondary);
+}
+
+body.dark-theme .sb-topnav .navbar-nav .nav-link:hover {
+    color: var(--nms-dark-text);
+}
+
+/* Sidebar styling */
+body.dark-theme #layoutSidenav_nav {
+    background-color: var(--nms-space-purple);
+}
+
+body.dark-theme .sb-sidenav {
+    background-color: var(--nms-space-purple);
+    color: var(--nms-dark-text);
+}
+
+body.dark-theme .sb-sidenav-dark {
+    background-color: var(--nms-space-purple);
+    color: var(--nms-dark-text);
+}
+
+body.dark-theme .sb-sidenav-dark .sb-sidenav-menu .nav-link {
+    color: var(--nms-dark-text-secondary);
+}
+
+body.dark-theme .sb-sidenav-dark .sb-sidenav-menu .nav-link:hover {
+    color: var(--nms-dark-primary);
+}
+
+body.dark-theme .sb-sidenav-dark .sb-sidenav-menu .nav-link.active {
+    color: var(--nms-dark-primary);
+}
+
+body.dark-theme .sb-sidenav-footer {
+    background-color: var(--nms-space-blue);
+}
+
+/* Content area styling */
+body.dark-theme #layoutSidenav_content {
+    background-color: var(--nms-dark-bg);
+    color: var(--nms-dark-text);
+}
+
+body.dark-theme main {
+    background-color: var(--nms-dark-bg);
+}
+
+/* Cards styling */
+body.dark-theme .card {
+    background-color: var(--nms-dark-surface);
+    border: 1px solid var(--nms-dark-border);
+}
+
+body.dark-theme .card-header {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--nms-dark-border);
+    color: var(--nms-dark-text);
+}
+
+/* Tables styling */
+body.dark-theme .table {
+    color: var(--nms-dark-text);
+    border-color: var(--nms-dark-border);
+}
+
+body.dark-theme .table thead th {
+    border-bottom: 2px solid var(--nms-dark-border);
+    background-color: var(--nms-space-blue);
+}
+
+body.dark-theme .table-bordered td,
+body.dark-theme .table-bordered th {
+    border: 1px solid var(--nms-dark-border);
+}
+
+body.dark-theme .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-theme .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.075);
+}
+
+/* Form controls */
+body.dark-theme .form-control {
+    background-color: var(--nms-dark-surface);
+    border: 1px solid var(--nms-dark-border);
+    color: var(--nms-dark-text);
+}
+
+body.dark-theme .form-control:focus {
+    background-color: var(--nms-dark-surface);
+    color: var(--nms-dark-text);
+    border-color: var(--nms-dark-primary);
+}
+
+/* Buttons */
+body.dark-theme .btn-primary {
+    background-color: var(--nms-dark-primary);
+    border-color: var(--nms-dark-primary);
+}
+
+body.dark-theme .btn-secondary {
+    background-color: var(--nms-dark-secondary);
+    border-color: var(--nms-dark-secondary);
+    color: #000;
+}
+
+/* Footer styling */
+body.dark-theme footer {
+    background-color: var(--nms-space-blue);
+    color: var(--nms-dark-text-secondary);
+}
+
+/* DataTables styling */
+body.dark-theme .datatable-wrapper {
+    background-color: var(--nms-dark-surface);
+    color: var(--nms-dark-text);
+}
+
+body.dark-theme .datatable-table {
+    border-color: var(--nms-dark-border);
+}
+
+body.dark-theme .datatable-pagination a {
+    color: var(--nms-dark-text-secondary);
+}
+
+body.dark-theme .datatable-pagination .active a,
+body.dark-theme .datatable-pagination a:hover {
+    background-color: var(--nms-dark-primary);
+    color: white;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.theme-toggle:hover {
+    color: rgba(255, 255, 255, 0.75);
+}

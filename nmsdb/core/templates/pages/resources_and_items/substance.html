@@ -1,0 +1,55 @@
+{% set active_route = "landing_page" %}
+{% extends "_layouts/_base.html" %}
+{% block content %}
+<!-- Toolbar -->
+<div class="pb-5">
+    <!-- Container -->
+    <div class="container-fixed flex items-center justify-between flex-wrap gap-3">
+        <div class="flex items-center flex-wrap gap-1 lg:gap-5">
+            <h1 class="font-medium text-base text-gray-900">
+                nmsdb
+            </h1>
+            <div class="flex items-center flex-wrap gap-1 text-sm">
+                <a class="text-gray-700">
+                Resources and Materials
+                </a>
+                <span class="text-gray-400 text-sm">
+                /
+                </span>
+                <a class="text-gray-700">
+                Substances
+                </a>
+                <span class="text-gray-400 text-sm">
+                /
+                </span>
+                <span class="text-gray-900">
+                {{ substance.name_lower }}
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- End of Container -->
+</div>
+<!-- End of Toolbar -->
+<!-- Container -->
+<div class="container-fixed">
+    <!-- begin: grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-7.5">
+        <div class="col-span-2">
+            {% include "fragments/cards/substance/overview.html" %}
+        </div>
+        <div class="col-span-2 lg:col-span-1 flex">
+            {% include "fragments/cards/substance/description.html" %}
+        </div>
+        <div class="col-span-2 lg:col-span-1 flex">
+            {% include "fragments/cards/substance/tips.html"%}
+        </div>
+    </div>
+    <!-- end: grid -->
+</div>
+<!-- End of Container -->
+
+<div class="container-fixed mt-5">
+    {% include "fragments/resources_and_items/substance_relationships_menu.html"%}
+</div>
+{% endblock %}

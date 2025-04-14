@@ -1,0 +1,38 @@
+{% import "macros/dropdown.html" as dropdown_macro %}
+
+{% set active_route = "landing_page" %}
+{% extends "_layouts/_base.html" %}
+{% block content %}
+<!-- Toolbar -->
+<div class="pb-5">
+    <!-- Container -->
+    <div class="container-fixed flex items-center justify-between flex-wrap gap-3">
+        <div class="flex items-center flex-wrap gap-1 lg:gap-5">
+            <h1 class="font-medium text-base text-gray-900">
+                nmsdb
+            </h1>
+            <div class="flex items-center flex-wrap gap-1 text-sm">
+                <a class="text-gray-700">
+                Resources and Materials
+                </a>
+                <span class="text-gray-400 text-sm">
+                /
+                </span>
+                <span class="text-gray-900">
+                Products
+                </span>
+            </div>
+        </div>
+        <div class="flex items-center flex-wrap gap-1.5 lg:gap-2.5">
+            {{ dropdown_macro.render(dropdown) }}
+        </div>
+    </div>
+    <!-- End of Container -->
+</div>
+<!-- End of Toolbar -->
+<!-- Container -->
+<div class="container-fixed">
+    <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 lg:gap-7.5" hx-get="{{ url_for('ui_products_page') }}" hx-trigger="load"></div>
+</div>
+<!-- End of Container -->
+{% endblock %}

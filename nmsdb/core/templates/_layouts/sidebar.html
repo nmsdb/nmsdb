@@ -1,0 +1,96 @@
+<!-- Sidebar -->
+<div class="fixed top-0 bottom-0 z-20 hidden lg:flex flex-col items-stretch shrink-0 bg-[--tw-page-bg] dark:bg-[--tw-page-bg-dark]" data-drawer="true" data-drawer-class="drawer drawer-start flex" data-drawer-enable="true|lg:false" id="sidebar">
+    <div class="hidden lg:flex items-center justify-center shrink-0 pt-8 pb-3.5" id="sidebar_header">
+        <a href="{{ url_for('landing_page') }}">
+        <img class="dark:hidden min-h-[42px]" src="{{ url_for('static', path='img/app/mini-logo-square-gray.svg') }}"/>
+        <img class="hidden dark:block min-h-[42px]" src="{{ url_for('static', path='img/app/mini-logo-square-gray-dark.svg') }}"/>
+        </a>
+    </div>
+    <div class="scrollable-y-hover grow gap-2.5 shrink-0 flex items-center pt-5 lg:pt-0 ps-3 pe-3 lg:pe-0 flex-col" data-scrollable="true" data-scrollable-dependencies="#sidebar_header,#sidebar_footer" data-scrollable-height="auto" data-scrollable-offset="80px" data-scrollable-wrappers="#sidebar_menu_wrapper" id="sidebar_menu_wrapper">
+        <!-- Sidebar Menu -->
+        <div class="menu flex flex-col gap-2.5 grow" data-menu="true" id="sidebar_menu">
+            {% for nav_group in nav %}
+                {% for nav_item in nav_group.nav_items %}
+                    <div class="menu-item" {% if nav_item.children %}data-menu-item-offset="-10px, 14px" data-menu-item-overflow="true" data-menu-item-placement="right-start" data-menu-item-toggle="dropdown" data-menu-item-trigger="click|lg:hover"{% endif %}>
+                        {% if nav_item.children %}
+                            <div class="menu-link rounded-[9px] border border-transparent menu-item-here:border-gray-200 menu-item-here:bg-light menu-link-hover:bg-light menu-link-hover:border-gray-200 w-[62px] h-[60px] flex flex-col justify-center items-center gap-1 p-2 grow">
+                                <span class="menu-icon menu-item-here:text-primary menu-item-active:text-primary menu-link-hover:text-primary text-gray-600">
+                                    <i class="{{ nav_item.logo | default('ki-filled ki-chart-line-star') }} text-1.5xl"></i>
+                                </span>
+                            </div>
+                            <div class="menu-default menu-dropdown gap-0.5 w-[220px] scrollable-y-auto lg:overflow-visible max-h-[50vh]">
+                                {% for child in nav_item.children %}
+                                    <div class="menu-item">
+                                        <a class="menu-link" 
+                                           {% if child.route.type == "htmx" %}
+                                               hx-get="{{ url_for(child.route.url) }}"
+                                               hx-target="#layoutSidenav_content"
+                                               hx-push-url="true"
+                                           {% elif child.route.type == "url_for" %}
+                                               href="{{ url_for(child.route.url) }}"
+                                           {% elif child.route.type == "href" %}
+                                               href="{{ child.route.url }}"
+                                           {% endif %}>
+                                            <span class="menu-title">
+                                                {{ child.title }}
+                                            </span>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <a class="menu-link rounded-[9px] border border-transparent menu-item-active:border-gray-200 menu-item-active:bg-light menu-link-hover:bg-light menu-link-hover:border-gray-200 w-[62px] h-[60px] flex flex-col justify-center items-center gap-1 p-2"
+                               {% if nav_item.route %}
+                                   {% if nav_item.route.type == "htmx" %}
+                                       hx-get="{{ url_for(nav_item.route.url) }}"
+                                       hx-target="#layoutSidenav_content"
+                                       hx-push-url="true"
+                                   {% elif nav_item.route.type == "url_for" %}
+                                       href="{{ url_for(nav_item.route.url) }}"
+                                   {% elif nav_item.route.type == "href" %}
+                                       href="{{ nav_item.route.url }}"
+                                   {% endif %}
+                               {% endif %}>
+                                <span class="menu-icon menu-item-here:text-primary menu-item-active:text-primary menu-link-hover:text-primary text-gray-600">
+                                    <i class="{{ nav_item.logo | default('ki-filled ki-chart-line-star') }} text-1.5xl"></i>
+                                </span>
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                {% if not loop.last and nav_group.has_top_border %}
+                    <div class="menu-separator"></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <!-- End of Sidebar Menu -->
+    </div>
+    <!-- User Footer -->
+    <div class="flex flex-col gap-5 items-center shrink-0 pb-4" id="sidebar_footer">
+        <div class="menu" data-menu="true">
+            <div class="menu-item" data-menu-item-offset="-20px, 28px" data-menu-item-overflow="true" data-menu-item-placement="right-end" data-menu-item-toggle="dropdown" data-menu-item-trigger="click|lg:click">
+                <div class="menu-toggle btn btn-icon">
+                    <img alt="" class="size-8 justify-center rounded-lg border border-gray-500 shrink-0" src="{{ url_for('static', path='img/avatars/gray/5.png') }}"/>
+                </div>
+                <div class="menu-dropdown menu-default light:border-gray-300 w-screen max-w-[250px]">
+                    <div class="flex flex-col">
+                        <div class="menu-item mb-0.5">
+                            <div class="menu-link">
+                                <span class="menu-icon">
+                                <i class="ki-filled ki-moon"></i>
+                                </span>
+                                <span class="menu-title">
+                                Dark Mode
+                                </span>
+                                <label class="switch switch-sm">
+                                <input data-theme-state="dark" data-theme-toggle="true" name="check" type="checkbox" value="1"/>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Sidebar -->

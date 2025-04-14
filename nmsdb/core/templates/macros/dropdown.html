@@ -1,0 +1,18 @@
+{% macro render(dropdown) %}
+{% if dropdown %}
+<select
+    name="{{ dropdown.name }}"
+    class="select select-sm w-28"
+    hx-get="{{ dropdown.url }}"
+    hx-target="{{ dropdown.target }}"
+    hx-trigger="{{ dropdown.trigger.value }}"
+    hx-swap="{{ dropdown.action.value }}"
+>
+    {% for item in dropdown.items %}
+        <option value="{{ item.value }}">
+            {{ item.label }}
+        </option>
+    {% endfor %}
+</select>
+{% endif %}
+{% endmacro %}

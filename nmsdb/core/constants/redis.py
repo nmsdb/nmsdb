@@ -1,0 +1,5 @@
+REDIS_KEY_SUBSTANCE = "cache:substances:{game_id}"
+REDIS_KEY_PRODUCT = "cache:products:{game_id}"
+REDIS_KEY_LANGUAGE_ENGLISH = "language:english:{word_id}"
+REDIS_KEY_SUBSTANCE_CATEGORIES = "substance:categories"
+REDIS_KEY_PRODUCT_TYPES = "product:types"

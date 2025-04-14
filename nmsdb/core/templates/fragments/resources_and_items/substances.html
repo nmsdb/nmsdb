@@ -1,0 +1,19 @@
+{% for substance in substances %}
+<div class="card flex flex-col items-center p-2">
+    <div class="">
+        <div class="relative">
+            <a href="{{ url_for('ui_substance', game_id=substance.game_id) }}">
+                <img src="{{ url_for('static', path=substance.resolve_img_path() ) }}"/>
+            </a>
+        </div>
+    </div>
+    <div class="flex items-center justify-center gap-1.5 mb-2">
+        <a class="hover:text-primary-active text-base leading-5 font-medium text-gray-900" href="#">
+        {{ substance.name_lower }}
+        </a>
+    </div>
+    <p class="text-gray-700 text-sm">
+    {{ substance.symbol}}
+    </p>
+</div>
+{% endfor %}
