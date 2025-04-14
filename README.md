@@ -6,3 +6,7 @@ Server side rendered with API (limiter), if you are looking to perform more requ
 ## Building
 
 Firstly you must run through the nmsdb-metadata repo and exported all the XMLs/files and ran through the scripts to preseed the database and redis.
+
+![screenshot-1](./docs/substances_page.png)
+![screenshot-2](./docs/substance_page.png)
+![screenshot-3](./docs/substance_page_mobile.png)
