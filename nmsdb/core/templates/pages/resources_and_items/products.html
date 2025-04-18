@@ -6,7 +6,7 @@
 <!-- Toolbar -->
 <div class="pb-5">
     <!-- Container -->
-    <div class="container-fixed flex items-center justify-between flex-wrap gap-3">
+    <div class="container-fluid flex items-center justify-between flex-wrap gap-3">
         <div class="flex items-center flex-wrap gap-1 lg:gap-5">
             <h1 class="font-medium text-base text-gray-900">
                 nmsdb
@@ -31,8 +31,9 @@
 </div>
 <!-- End of Toolbar -->
 <!-- Container -->
-<div class="container-fixed">
-    <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 lg:gap-7.5" hx-get="{{ url_for('ui_products_page') }}" hx-trigger="load"></div>
+<div class="container-fluid">
+    <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-8 gap-1 lg:gap-1" hx-get="{{ url_for('ui_products_page') }}" hx-trigger="load"></div>
+    {% include "fragments/generic/pagination.html" %}
 </div>
 <!-- End of Container -->
 {% endblock %}
